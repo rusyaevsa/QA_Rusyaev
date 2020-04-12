@@ -11,16 +11,16 @@ public class ItemScope {
 
     public ItemScope(WebDriver driver){ this.driver = driver; }
 
-    public void findButtonLogin(){
+    private void findButtonLogin(){
         this.buttonLogin = driver.findElement(By.cssSelector("[data-widget*='profileMenuAnonymous']"));
     }
 
-    public void clickButtonLogin(){
+    void clickButtonLogin(){
         findButtonLogin();
         this.buttonLogin.click();
     }
 
-    public void checkProfile(){
+    void checkProfile(){
         this.buttonLogin = driver.findElement(By.cssSelector("[data-widget*='profile']"));
         Assert.assertEquals(this.buttonLogin.findElement(By.cssSelector(".a8y2")).getAttribute("textContent"),
                 "Кабинет");
