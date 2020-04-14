@@ -43,7 +43,7 @@ public class TestBefore {
         options.setExperimentalOption("useAutomationExtension", false);
         driver = new ChromeDriver(options);
         screen = new Screen(driver, PATH_FOR_SCREEN);
-        driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
         driver.get("https://ozon.ru");
     }
 
