@@ -10,7 +10,7 @@ public class PublicMethods {
     public static void closeCookie(WebDriver driver){
         try {
             WebElement close = driver.findElement(By.cssSelector("[aria-label=\"Закрыть сообщение\"]"));
-            (new WebDriverWait(driver, 5)).until(ExpectedConditions.visibilityOf(close));
+            (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOf(close));
             close.click();
         }
         catch (Exception e){}

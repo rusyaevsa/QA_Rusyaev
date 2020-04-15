@@ -1,6 +1,7 @@
 package qa_test;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,9 +13,14 @@ public class LeftPanel {
     public LeftPanel(WebDriver driver){ this.driver = driver; }
 
     public void chooseJuiser(){
-        //WebElement showAll = driver.findElement(By.xpath("//div[text()[contains(., 'Техника для кухни')]]"));
+
         WebElement showAll = driver.findElement(By.cssSelector("[href='/category/tehnika-dlya-kuhni-10523/']"));
         (new WebDriverWait(driver, 40)).until(ExpectedConditions.visibilityOf(showAll));
+        String code = "window.scroll(" + (showAll.getLocation().x + 20) + ","
+                + (showAll.getLocation().y + 20) + ");";
+
+        ((JavascriptExecutor)driver).executeScript(code, showAll, 20, 20);
+        PublicMethods.closeCookie(driver);
         showAll.click();
         PublicMethods.closeCookie(driver);
         WebElement juicer = driver.findElement(By.cssSelector("[href='/category/sokovyzhimalki-10592/']"));

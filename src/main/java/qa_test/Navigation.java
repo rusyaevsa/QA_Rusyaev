@@ -22,6 +22,6 @@ public class Navigation {
 
     public void checkCity(String city){
         findCity();
-        Assert.assertTrue(buttonCity.findElement(By.xpath("//span")).getAttribute("textContent").contains(city));
+        Assert.assertTrue(buttonCity.findElement(By.xpath(".//span")).getAttribute("textContent").contains(city));
     }
 }

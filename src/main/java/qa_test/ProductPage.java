@@ -1,6 +1,7 @@
 package qa_test;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -8,6 +9,8 @@ import org.testng.Assert;
 
 import java.security.Key;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProductPage {
     private WebDriver driver;
@@ -38,8 +41,10 @@ public class ProductPage {
         (new WebDriverWait(driver, 20))
                 .until(ExpectedConditions.visibilityOf(priceOutForm));
         priceOutForm = priceOutForm.findElement(By.cssSelector("[qa-id*='range-to']"));
-        priceOutForm.sendKeys("");
-
+        //priceOutForm.sendKeys("");
+        //priceOutForm.click();
+        (new Actions(driver)).moveToElement(priceOutForm, priceOutForm.getSize().getWidth() - 1, 1)
+                .click().build().perform();
         WebElement priceRange = driver.findElement(By.cssSelector("[data-widget*='searchResultsFiltersActive']"));
         (new WebDriverWait(driver, 20))
                 .until(ExpectedConditions.visibilityOf(priceRange));
@@ -48,7 +53,7 @@ public class ProductPage {
                 .findElement(By.xpath(".//div[text()[contains(., 'Цена')]]/.."));
         (new WebDriverWait(driver, 20))
                 .until(ExpectedConditions.visibilityOf(priceOutForm));
-        priceOutForm = priceOutForm.findElement(By.cssSelector("[id*='to_']"));
+        priceOutForm = priceOutForm.findElement(By.cssSelector("[qa-id*='range-to']"));
         strPrice = "\b\b\b\b\b\b" + Integer.toString(priceOut);
         priceOutForm.sendKeys(strPrice);
         priceOutForm.sendKeys(Keys.ENTER);
@@ -59,19 +64,18 @@ public class ProductPage {
             public Boolean apply(WebDriver driver) {
                 String d = driver.findElement(By
                         .cssSelector("[data-widget*='searchResultsFiltersActive']"))
+                        .findElement(By.xpath(".//div//span[text()[contains(., 'Цена')]]"))
                         .getAttribute("textContent").replaceAll("\\D", "");
                 System.out.println(d);
                 return d.equals("30004000");
             }
         });
-//        JavascriptExecutor js = ((JavascriptExecutor) driver);
-//        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         WebElement searchResult = driver.findElement(By.cssSelector("[data-widget='searchResultsV2']"));
-        List<WebElement> prices = searchResult.findElements(By.xpath("./div/div"));
+        List<WebElement> prices = searchResult.findElements(By.xpath("./div/div/div[@class]"));
         System.out.println(prices.size());
         boolean allPrice = true;
         for(WebElement price: prices){
-            WebElement priceValue = price.findElement(By.xpath(".//div[@class]/div/div[3]/a//span"));
+            WebElement priceValue = price.findElement(By.xpath("./div/div[3]/a//span"));
             System.out.println(priceValue.getAttribute("textContent"));
             int nowPrice = Integer
                     .parseInt(priceValue.getAttribute("textContent").replaceAll("\\D", ""));
@@ -100,9 +104,12 @@ public class ProductPage {
                 return sortBox.getAttribute("aria-expanded").equals("true");
             }
         });
+        WebElement searchResult = driver.findElement(By.cssSelector("[data-widget='searchResultsV2']"))
+                .findElement(By.xpath(".//div/div"));
         sortBox.sendKeys(Keys.ARROW_DOWN);
         sortBox.sendKeys(Keys.ARROW_DOWN);
         sortBox.sendKeys(Keys.ENTER);
+        // Ожидание теперь не работает, combobox не устаревает
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.stalenessOf(sortBox));
     }
 
@@ -116,5 +123,50 @@ public class ProductPage {
 
     }
 
+    public void inputPower(int power) {
+        waitJuicer();
+        WebElement powerForm =
+                driver.findElement(By.cssSelector("[data-widget=\"searchResultsFilters\"]"))
+                        .findElement(By.xpath(".//div[text()[contains(., 'Мощность')]]/.."));
+        (new WebDriverWait(driver, 20))
+                .until(ExpectedConditions.visibilityOf(powerForm));
+        WebElement powerInForm = powerForm.findElement(By.cssSelector("[qa-id*='range-from']"));
 
+        String strPrice = "\b\b\b\b\b" + Integer.toString(power);
+        powerInForm.sendKeys(strPrice);
+        powerForm.click();
+    }
+
+    public void checkPower(int power){
+        (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                String d = driver.findElement(By
+                        .cssSelector("[data-widget*='searchResultsFiltersActive']"))
+                        .findElement(By.xpath(".//div//span[text()[contains(., 'Мощность')]]"))
+                        .getAttribute("textContent").replaceAll("\\D", "").substring(0, 4);
+                System.out.println(d);
+                return d.equals("1000");
+            }
+        });
+        WebElement searchResult = driver.findElement(By.cssSelector("[data-widget='searchResultsV2']"));
+        List<WebElement> powers = searchResult.findElements(By.xpath("./div/div/div[@class]"));
+        System.out.println(powers.size());
+        boolean allPower = true;
+        for(WebElement powerElement: powers){
+            WebElement attributes = powerElement
+                    .findElement(By.xpath("./div/div[2]//span[text()[contains(., 'Мощность')]]"));
+            String powerValue = attributes.getAttribute("textContent");
+            Pattern pattern = Pattern.compile("Мощность, Вт: \\d*");
+            Matcher matcher = pattern.matcher(powerValue);
+            matcher.find();
+            powerValue = powerValue.substring(matcher.start(), matcher.end()).replaceAll("\\D", "");
+            System.out.println(powerValue);
+            int nowPower = Integer.parseInt(powerValue);
+            if (nowPower < power) {
+                allPower = false;
+                break;
+            }
+        }
+        Assert.assertTrue(allPower);
+    }
 }
