@@ -1,5 +1,6 @@
 package qa_test;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,8 +13,8 @@ public class LeftPanel {
 
     public LeftPanel(WebDriver driver){ this.driver = driver; }
 
+    @Step("Выбираем категорию \"Соковыжималки\"")
     public void chooseJuiser(){
-
         WebElement showAll = driver.findElement(By.cssSelector("[href='/category/tehnika-dlya-kuhni-10523/']"));
         (new WebDriverWait(driver, 40)).until(ExpectedConditions.visibilityOf(showAll));
         String code = "window.scroll(" + (showAll.getLocation().x + 20) + ","

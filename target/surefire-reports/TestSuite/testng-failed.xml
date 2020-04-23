@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [TestSuite]">
+  <test thread-count="5" verbose="0" name="PowerTest(failed)">
+    <classes>
+      <class name="qa_test.Test4">
+        <methods>
+          <include name="quit"/>
+          <include name="preparation"/>
+          <include name="juicerPowerTest"/>
+        </methods>
+      </class> <!-- qa_test.Test4 -->
+    </classes>
+  </test> <!-- PowerTest(failed) -->
+</suite> <!-- Failed suite [TestSuite] -->

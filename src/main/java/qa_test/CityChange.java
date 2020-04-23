@@ -1,5 +1,6 @@
 package qa_test;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +16,7 @@ public class CityChange {
         this.driver = driver;
     }
 
+    @Step("Изменение города на {0}")
     public void inputCity(String city) throws InterruptedException {
         WebElement formInputCity = driver.findElement(By.className("modal-content"));
         (new WebDriverWait(driver, 40)).until(ExpectedConditions.visibilityOf(formInputCity));

@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="TestSuite">
+    <test name="LoginTest">
+        <classes>
+            <class name="qa_test.Test1"/>
+        </classes>
+    </test>
+    <test name="NewCityTest">
+        <classes>
+            <class name="qa_test.Test2" />
+        </classes>
+    </test>
+    <test name="PriceTest">
+        <classes>
+            <class name="qa_test.Test3" />
+        </classes>
+    </test>
+    <test name="PowerTest">
+        <classes>
+            <class name="qa_test.Test4" />
+        </classes>
+    </test>
+</suite>

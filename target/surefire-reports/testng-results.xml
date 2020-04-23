@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+  <reporter-output>
+  </reporter-output>
+  <suite name="TestSuite" duration-ms="152280" started-at="2020-04-23T13:46:46Z" finished-at="2020-04-23T13:49:19Z">
+    <groups>
+    </groups>
+    <test name="LoginTest" duration-ms="23633" started-at="2020-04-23T13:46:46Z" finished-at="2020-04-23T13:47:10Z">
+      <class name="qa_test.Test1">
+        <test-method status="PASS" signature="preparation(org.testng.ITestContext)[pri:0, instance:qa_test.Test1@5af28b27]" name="preparation" is-config="true" duration-ms="5366" started-at="2020-04-23T13:46:47Z" finished-at="2020-04-23T13:46:52Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@66048c9e]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preparation -->
+        <test-method status="PASS" signature="loginTest()[pri:0, instance:qa_test.Test1@5af28b27]" name="loginTest" duration-ms="17332" started-at="2020-04-23T13:46:52Z" finished-at="2020-04-23T13:47:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginTest -->
+        <test-method status="PASS" signature="quit()[pri:0, instance:qa_test.Test1@5af28b27]" name="quit" is-config="true" duration-ms="794" started-at="2020-04-23T13:47:09Z" finished-at="2020-04-23T13:47:10Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- quit -->
+      </class> <!-- qa_test.Test1 -->
+    </test> <!-- LoginTest -->
+    <test name="NewCityTest" duration-ms="25890" started-at="2020-04-23T13:47:10Z" finished-at="2020-04-23T13:47:36Z">
+      <class name="qa_test.Test2">
+        <test-method status="PASS" signature="preparation(org.testng.ITestContext)[pri:0, instance:qa_test.Test2@4b6166aa]" name="preparation" is-config="true" duration-ms="4457" started-at="2020-04-23T13:47:10Z" finished-at="2020-04-23T13:47:15Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@543ba2e1]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preparation -->
+        <test-method status="PASS" signature="changeCityTest()[pri:0, instance:qa_test.Test2@4b6166aa]" name="changeCityTest" duration-ms="20638" started-at="2020-04-23T13:47:15Z" finished-at="2020-04-23T13:47:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- changeCityTest -->
+        <test-method status="PASS" signature="quit()[pri:0, instance:qa_test.Test2@4b6166aa]" name="quit" is-config="true" duration-ms="789" started-at="2020-04-23T13:47:35Z" finished-at="2020-04-23T13:47:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- quit -->
+      </class> <!-- qa_test.Test2 -->
+    </test> <!-- NewCityTest -->
+    <test name="PriceTest" duration-ms="52949" started-at="2020-04-23T13:47:36Z" finished-at="2020-04-23T13:48:29Z">
+      <class name="qa_test.Test3">
+        <test-method status="PASS" signature="preparation(org.testng.ITestContext)[pri:0, instance:qa_test.Test3@2baa8d82]" name="preparation" is-config="true" duration-ms="4463" started-at="2020-04-23T13:47:36Z" finished-at="2020-04-23T13:47:40Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@71458178]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preparation -->
+        <test-method status="PASS" signature="juicerPricesTest()[pri:0, instance:qa_test.Test3@2baa8d82]" name="juicerPricesTest" duration-ms="35823" started-at="2020-04-23T13:47:40Z" finished-at="2020-04-23T13:48:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- juicerPricesTest -->
+        <test-method status="PASS" signature="quit()[pri:0, instance:qa_test.Test3@2baa8d82]" name="quit" is-config="true" duration-ms="12660" started-at="2020-04-23T13:48:16Z" finished-at="2020-04-23T13:48:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- quit -->
+      </class> <!-- qa_test.Test3 -->
+    </test> <!-- PriceTest -->
+    <test name="PowerTest" duration-ms="49779" started-at="2020-04-23T13:48:29Z" finished-at="2020-04-23T13:49:19Z">
+      <class name="qa_test.Test4">
+        <test-method status="PASS" signature="preparation(org.testng.ITestContext)[pri:0, instance:qa_test.Test4@4cc76301]" name="preparation" is-config="true" duration-ms="4641" started-at="2020-04-23T13:48:29Z" finished-at="2020-04-23T13:48:34Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@723c5f86]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preparation -->
+        <test-method status="PASS" signature="juicerPowerTest()[pri:0, instance:qa_test.Test4@4cc76301]" name="juicerPowerTest" duration-ms="32446" started-at="2020-04-23T13:48:34Z" finished-at="2020-04-23T13:49:06Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- juicerPowerTest -->
+        <test-method status="PASS" signature="quit()[pri:0, instance:qa_test.Test4@4cc76301]" name="quit" is-config="true" duration-ms="12684" started-at="2020-04-23T13:49:06Z" finished-at="2020-04-23T13:49:19Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- quit -->
+      </class> <!-- qa_test.Test4 -->
+    </test> <!-- PowerTest -->
+  </suite> <!-- TestSuite -->
+</testng-results>

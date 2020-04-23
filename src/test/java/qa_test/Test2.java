@@ -16,6 +16,8 @@ public class Test2 extends TestBefore{
         Autorization autorization = new Autorization(driver);
         autorization.inputPhoneInForm(phone);
         autorization.waitInputCode();
-        // TO DO Доделать тест с сравнением города
+        // Тест с сравнением города
+        itemScope.clickButtonProfile();
+        navigation.checkCity(city);
     }
 }

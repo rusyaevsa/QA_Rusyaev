@@ -23,7 +23,7 @@ public class TestBefore {
 
     public String screenDate() {
         Date date = new Date();
-        DateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+        DateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss.S");
         screen.saveAllureScreenshot(formatForDateNow.format(date));
         return formatForDateNow.format(date);
     }
@@ -53,8 +53,7 @@ public class TestBefore {
             WebElement toExit = driver.findElement(By.cssSelector("[data-widget='profile']"));
             (new Actions(driver)).moveToElement(toExit).build().perform();
             driver.findElement(By.xpath("//button[text()[contains(., 'Выйти')]]")).click();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
         }
         driver.quit();
     }

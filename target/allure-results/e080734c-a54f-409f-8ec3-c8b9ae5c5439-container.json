@@ -1,0 +1,1 @@
+{"uuid":"e080734c-a54f-409f-8ec3-c8b9ae5c5439","name":"qa_test.TestBefore.quit","description":"","start":1587642936551,"stop":1587642949266,"children":["9f8696b4-ddf7-49d1-8f44-22d20cbff5bd"],"afters":[{"name":"quit","status":"passed","stage":"finished","description":"","start":1587642936551,"stop":1587642949266}]}

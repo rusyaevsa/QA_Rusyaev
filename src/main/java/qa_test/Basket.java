@@ -1,5 +1,6 @@
 package qa_test;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,9 +16,11 @@ public class Basket {
         this.driver = driver;
     }
 
-    public int addCountGood(int count){
-        WebElement countBox = driver.findElement(By.cssSelector("[data-widget*='split']"));
-        countBox = countBox.findElement(By.xpath(".//div[@role='listbox']//input"));
+    @Step("Добавление {0} штук данного товара (или сколько имеется)")
+    int addCountGood(int count){
+        WebElement countBoxMain = driver.findElement(By.cssSelector("[data-widget*='split']"));
+        countBoxMain = countBoxMain.findElement(By.xpath(".//div[@role='listbox']"));
+        WebElement countBox = countBoxMain.findElement(By.xpath(".//input"));
         countBox.click();
         (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>(){
             public Boolean apply(WebDriver driver){
@@ -26,12 +29,13 @@ public class Basket {
                 return countBox.getAttribute("aria-expanded").equals("true");
             }
         });
-        int k = count;
+
         for (int i = 1; i < count; i++) {
             countBox.sendKeys(Keys.ARROW_DOWN);
         }
         countBox.sendKeys(Keys.ENTER);
-        return k;
+        return Integer.parseInt(countBoxMain.findElement(By.xpath("./div/div/div"))
+                .getAttribute("textContent").replaceAll("\\D", ""));
     }
 
     private void waitLoadedRight(final int count){
@@ -44,7 +48,8 @@ public class Basket {
         });
     }
 
-    public void checkPrice(int count){
+    @Step("Проверка соответствия цены {0} штук товара")
+    void checkPrice(int count){
         waitLoadedRight(count);
         WebElement good = driver.findElement(By.cssSelector("[data-widget=\"split\"]"));
         WebElement priceOne = good.findElement(By.xpath(".//div[text()[contains(., 'шт.')]]"));
