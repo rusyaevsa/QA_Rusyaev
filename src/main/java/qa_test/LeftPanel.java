@@ -15,6 +15,7 @@ public class LeftPanel {
 
     @Step("Выбираем категорию \"Соковыжималки\"")
     public void chooseJuiser(){
+        // ищем и нажимаем на элемент техника для кухни
         WebElement showAll = driver.findElement(By.cssSelector("[href='/category/tehnika-dlya-kuhni-10523/']"));
         (new WebDriverWait(driver, 40)).until(ExpectedConditions.visibilityOf(showAll));
         String code = "window.scroll(" + (showAll.getLocation().x + 20) + ","
@@ -24,6 +25,7 @@ public class LeftPanel {
         PublicMethods.closeCookie(driver);
         showAll.click();
         PublicMethods.closeCookie(driver);
+        // ищем и нажимаем на эелемент соковыжималки
         WebElement juicer = driver.findElement(By.cssSelector("[href='/category/sokovyzhimalki-10592/']"));
         (new WebDriverWait(driver, 40)).until(ExpectedConditions.visibilityOf(juicer));
         juicer.click();

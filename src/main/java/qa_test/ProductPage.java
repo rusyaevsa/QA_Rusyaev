@@ -28,52 +28,53 @@ public class ProductPage {
     @Step("Ввод диапазона цен от {0} до {1}")
     public void inputPrice(int priceIn, int priceOut) {
         waitJuicer();
-        WebElement priceInForm =
-                driver.findElement(By.cssSelector("[data-widget=\"searchResultsFilters\"]"))
+        WebElement priceForm =  driver.findElement(By.cssSelector("[data-widget=\"searchResultsFilters\"]"))
                 .findElement(By.xpath(".//div[text()[contains(., 'Цена')]]/.."));
+        //ищем форму для ввода цены и вводим минимальную цену
         (new WebDriverWait(driver, 20))
-                .until(ExpectedConditions.visibilityOf(priceInForm));
-        priceInForm = priceInForm.findElement(By.cssSelector("[qa-id*='range-from']"));
+                .until(ExpectedConditions.visibilityOf(priceForm));
+        WebElement priceInForm = priceForm.findElement(By.cssSelector("[qa-id*='range-from']"));
 
         String strPrice = "\b\b\b\b\b" + priceIn;
         priceInForm.sendKeys(strPrice);
-        WebElement priceOutForm = driver.findElement(By.cssSelector("[data-widget=\"searchResultsFilters\"]"))
-                .findElement(By.xpath(".//div[text()[contains(., 'Цена')]]/.."));
+
+        // ждём появления формы с диапазоном цен и после этого вводим верхнюю границу цены
         (new WebDriverWait(driver, 20))
-                .until(ExpectedConditions.visibilityOf(priceOutForm));
-        priceOutForm = priceOutForm.findElement(By.cssSelector("[qa-id*='range-to']"));
+                .until(ExpectedConditions.visibilityOf(priceForm));
+        WebElement priceOutForm = priceForm.findElement(By.cssSelector("[qa-id*='range-to']"));
         (new Actions(driver)).moveToElement(priceOutForm, priceOutForm.getSize().getWidth() - 1, 1)
                 .click().build().perform();
         WebElement priceRange = driver.findElement(By.cssSelector("[data-widget*='searchResultsFiltersActive']"));
         (new WebDriverWait(driver, 20))
                 .until(ExpectedConditions.visibilityOf(priceRange));
 
-        WebElement priceForm = driver.findElement(By.cssSelector("[data-widget=\"searchResultsFilters\"]"))
-                .findElement(By.xpath(".//div[text()[contains(., 'Цена')]]/.."));
         (new WebDriverWait(driver, 20))
                 .until(ExpectedConditions.visibilityOf(priceOutForm));
-        priceOutForm = priceForm.findElement(By.cssSelector("[qa-id*='range-to']"));
         strPrice = "\b\b\b\b\b\b" + Integer.toString(priceOut);
         priceOutForm.sendKeys(strPrice);
         priceForm.click();
     }
 
     @Step("Проверка диапазона цен от {0} до {1}")
-    public void checkJuicersPrices(int priceIn, int priceOut){
+    public void checkJuicersPrices(final int priceIn, final int priceOut){
+        // ожидаем появления формы с правильным диапазоном цен
         (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
-                String d = driver.findElement(By
+                String range = driver.findElement(By
                         .cssSelector("[data-widget*='searchResultsFiltersActive']"))
                         .findElement(By.xpath(".//div//span[text()[contains(., 'Цена')]]"))
                         .getAttribute("textContent").replaceAll("\\D", "");
-                System.out.println(d);
-                return d.equals("30004000");
+                System.out.println(range);
+                String userRange = Integer.toString(priceIn) + Integer.toString(priceOut);
+                return range.equals(userRange);
             }
         });
+
+        // извлекаем список цен соковыжималок
         WebElement searchResult = driver.findElement(By.cssSelector("[data-widget='searchResultsV2']"));
         List<WebElement> prices = searchResult.findElements(By.xpath("./div/div/div[@class]"));
-        System.out.println(prices.size());
         boolean allPrice = true;
+        //проходим по всем ценам и проверяем на соответствие диапазону
         for(WebElement price: prices){
             WebElement priceValue = price.findElement(By.xpath("./div/div[3]/a//span"));
             System.out.println(priceValue.getAttribute("textContent"));
@@ -91,9 +92,11 @@ public class ProductPage {
     public void sortPrice(){
         waitJuicer();
         PublicMethods.closeCookie(driver);
+        // находим combobox с ценами и кликаем на него
         WebElement sortBox = driver.findElement(By.cssSelector("[data-widget*='searchResultsSort']"));
         sortBox = sortBox.findElement(By.xpath(".//input"));
         sortBox.click();
+        // ожидаем обновление элемента combobox
         (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean> (){
             public Boolean apply(WebDriver driver){
                 WebElement sortBox = driver.findElement(By.cssSelector("[data-widget*='searchResultsSort']"))
@@ -102,8 +105,8 @@ public class ProductPage {
                 return sortBox.getAttribute("aria-expanded").equals("true");
             }
         });
-        WebElement searchResult = driver.findElement(By.cssSelector("[data-widget='searchResultsV2']"))
-                .findElement(By.xpath(".//div/div"));
+
+        // выбираем сортировку по цене(сначала дешёвые)
         sortBox.sendKeys(Keys.ARROW_DOWN);
         sortBox.sendKeys(Keys.ARROW_DOWN);
         sortBox.sendKeys(Keys.ENTER);
@@ -111,13 +114,16 @@ public class ProductPage {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.stalenessOf(sortBox));
     }
 
-    @Step("Добавление второго товара в корзину")
+    @Step("Добавление второго из списка товара в корзину")
     void addIntoBasket(){
         WebElement searchResult = driver.findElement(By.cssSelector("[data-widget='searchResultsV2']"));
-        WebElement juicerBasket = searchResult
-                .findElement(By.xpath("./div/div[2]//button[.//*[contains(., 'В корзину')]]"));
+        WebElement juicerTwo = searchResult
+                .findElement(By.xpath("./div/div[2]"));
+        WebElement juicerBasket = juicerTwo.findElement(By.xpath(".//button[.//*[contains(., 'В корзину')]]"));
         (new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(juicerBasket));
         juicerBasket.click();
+        (new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(juicerTwo
+                .findElement(By.xpath(".//span[text()[contains(., '1 шт')]]"))));
     }
 
     @Step("Ввод диапазона мощности >= {0}")
@@ -136,21 +142,24 @@ public class ProductPage {
     }
 
     @Step("Проверка диапазона мощности >= {0}")
-    void checkPower(int power){
+    void checkPower(final int power){
+        // ожидаем появления формы с диапазоном мощности
         (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
-                String d = driver.findElement(By
+                String powerRange = driver.findElement(By
                         .cssSelector("[data-widget*='searchResultsFiltersActive']"))
                         .findElement(By.xpath(".//div//span[text()[contains(., 'Мощность')]]"))
                         .getAttribute("textContent").replaceAll("\\D", "").substring(0, 4);
-                System.out.println(d);
-                return d.equals("1000");
+                System.out.println(powerRange);
+                return powerRange.equals(Integer.toString(power));
             }
         });
+
+        // из списка соковыжималок выбираем список мощностей
         WebElement searchResult = driver.findElement(By.cssSelector("[data-widget='searchResultsV2']"));
         List<WebElement> powers = searchResult.findElements(By.xpath("./div/div/div[@class]"));
-        System.out.println(powers.size());
         boolean allPower = true;
+        // проверяем каждую соковыжималку на соответствие
         for(WebElement powerElement: powers){
             WebElement attributes = powerElement
                     .findElement(By.xpath("./div/div[2]//span[text()[contains(., 'Мощность')]]"));

@@ -10,8 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 class Autorization {
     private WebDriver driver;
-    private WebElement agreeButton;
-    private WebElement inputPhone;
 
     Autorization(WebDriver driver){ this.driver = driver; }
 

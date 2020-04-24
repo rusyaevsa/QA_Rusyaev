@@ -7,13 +7,12 @@ public class Test3 extends TestBefore {
     public void juicerPricesTest() {
         ItemScope itemScope = new ItemScope(driver);
         itemScope.clickButtonCatalog();
-        itemScope.chooseJuicer();
+        itemScope.chooseAppliances();
         LeftPanel leftPanel = new LeftPanel(driver);
         leftPanel.chooseJuiser();
         ProductPage productPage = new ProductPage(driver);
         productPage.inputPrice(3000, 4000);
         productPage.checkJuicersPrices(3000, 4000);
-        // поправить, происходит лишнее обновление страницы
         productPage.sortPrice();
         productPage.addIntoBasket();
         itemScope.goToBasket();

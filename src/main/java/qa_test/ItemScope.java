@@ -53,9 +53,9 @@ public class ItemScope {
         this.buttonCatalog.click();
     }
 
-    // выбрать соковыжималку
+    // выбрать бытовую технику
     @Step("Выбор раздела \"Бытовая техника\"")
-    void chooseJuicer(){
+    void chooseAppliances(){
         WebElement catalog = driver.findElement(By.cssSelector("[href='/category/bytovaya-tehnika-10500/']"));
         (new WebDriverWait(driver, 40)).until(ExpectedConditions.visibilityOf(catalog));
         //(new Actions(driver)).moveToElement(catalog).build().perform();
@@ -65,15 +65,6 @@ public class ItemScope {
     @Step("Нажатие на кнопку \"Корзина\"")
     void goToBasket(){
         WebElement basket = driver.findElement(By.cssSelector("[data-widget*='cart']"));
-        (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>(){
-            public Boolean apply(WebDriver driver){
-                WebElement count = driver.findElement(By.cssSelector("[data-widget*='cart']"))
-                        .findElement(By.cssSelector("[class*='f-caption--bold']"));
-                return count.getAttribute("textContent").equals("1");
-            }
-        });
         basket.click();
     }
-
-
 }
